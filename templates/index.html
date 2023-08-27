@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Upload Dashboard</title>
+</head>
+<body>
+    <h1>Audio Upload Dashboard</h1>
+
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="audio/*" multiple>
+        <input type="submit" value="Upload">
+    </form>
+
+    {% if warning %}
+        <p style="color: red;">{{ warning }}</p>
+    {% endif %}
+
+    <table>
+        <tr>
+            <th>Filename</th>
+            <th>Upload Date</th>
+            <th>Duration</th>
+            <th>Action</th>
+        </tr>
+        {% for upload in uploads %}
+            <tr>
+                <td>{{ upload.filename }}</td>
+                <td>{{ upload.upload_date }}</td>
+                <td>{{ upload.duration }}</td>
+                <td><audio controls><source src="{{ url_for('static', filename='uploads/' + upload.filename) }}"></audio></td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
